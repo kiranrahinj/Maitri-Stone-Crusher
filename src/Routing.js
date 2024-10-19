@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 import Order from "./Component/Pages/Order/Order"
@@ -17,91 +18,53 @@ import CustomerDashboard from './Component/Dashboards/CustomerDashboard';
 import PaymentMode from './Component/Pages/Customer/PaymentMode';
 import Dashboard from './Component/Dashboard';
 import GetExpneseByDate from './Component/Pages/Expnese/GetExpenseByDate';
-import DiselPaidBy from "./Component/Pages/Expnese/DiselPaidBy"
-import ExpnesePaidBy from "./Component/Pages/Expnese/ExpensePaidBy"
+import DieselPaidBy from "./Component/Pages/Expnese/DiselPaidBy"
+import ExpensePaidBy from "./Component/Pages/Expnese/ExpensePaidBy"
 import ExpenseDashboard from './Component/Dashboards/ExpenseDashBoard';
+import AddExpense from './Component/Pages/Expnese/AddExpense';
+import NotFound from './Component/Pages/Expnese/NotFound';
 
-function Routing() {
+const Routing = () => {
   return (
-    <div>
-      <Routes>
-        <Route path='/dashboard' element={<Dashboard />}></Route>
-      </Routes>
+    <Routes>
+      {/* Dashboard Routes */}
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/order_dash" element={<OrderDashboard />} />
+      <Route path="/customer_dash" element={<CustomerDashboard />} />
+      <Route path="/expense_dash" element={<ExpenseDashboard />} />
 
-      <Routes>
-        <Route path='/orders' element={<Order />}></Route>
-      </Routes>
-      <Routes>
-        <Route path='/login' element={<Login />}></Route>
-      </Routes>
+      {/* Auth Route */}
+      <Route path="/login" element={<Login />} />
 
-      <Routes>
-        <Route path='/order_dash' element={<OrderDashboard />}></Route>
-      </Routes>
-      <Routes>
-        <Route path='/addOrder' element={<AddOrder />}></Route>
-      </Routes>
-      <Routes>
-        <Route path='/get-order-by-customer' element={<GetOrderByName />}></Route>
-      </Routes>
+      {/* Order Management Routes */}
+      <Route path="/orders" element={<Order />} />
+      <Route path="/addOrder" element={<AddOrder />} />
+      <Route path="/get-order-by-customer" element={<GetOrderByName />} />
+      <Route path="/payment-status" element={<GetByPaymentStatus />} />
+      <Route path="/payment-received" element={<GetPaymentRecieved />} />
+      <Route path="/get-order-by-date" element={<GetByDate />} />
+      <Route path="/filled-by" element={<GetFilledBy />} />
+      <Route path="/order_status" element={<GetByOrderStatus />} />
 
-      <Routes>
-        <Route path='/payment-status' element={<GetByPaymentStatus />}></Route>
-      </Routes>
+      {/* Customer Management Routes */}
+      <Route path="/all_customer" element={<CustomerDetails />} />
+      <Route path="/customer_name" element={<GetByCustomer />} />
+      <Route path="/paymentMode" element={<PaymentMode />} />
 
-      <Routes>
-        <Route path='/payment-received' element={<GetPaymentRecieved />}></Route>
-      </Routes>
+      {/* Expense Management Routes */}
+      <Route path="/all_expense" element={<ExpensesUsed />} />
+      <Route path="/expense_by_date" element={<GetExpneseByDate />} />
+      <Route path="/disel_paid_by" element={<DieselPaidBy />} />
+      <Route path="/expense_paid_by" element={<ExpensePaidBy />} />
+      <Route path="/add_expense" element={<AddExpense />} />
 
-      <Routes>
-        <Route path='/get-order-by-date' element={<GetByDate />}></Route>
-      </Routes>
+      {/* 404 Not Found Route */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
 
-      <Routes>
-        <Route path='/filled-by' element={<GetFilledBy />}></Route>
-      </Routes>
+export default Routing;
 
-      <Routes>
-        <Route path='/order_status' element={<GetByOrderStatus />}></Route>
-      </Routes>
 
-      <Routes>
-        <Route path='/customer_dash' element={<CustomerDashboard />}></Route>
-      </Routes>
-      
-      <Routes>
-        <Route path='/customer_name' element={<GetByCustomer />}></Route>
-      </Routes>
 
-      <Routes>
-        <Route path='/all_customer' element={<CustomerDetails />}></Route>
-      </Routes>
-
-      <Routes>
-        <Route path='/paymentMode' element={<PaymentMode />}></Route>
-      </Routes>
-
-      <Routes>
-        <Route path='/all_expense' element={<ExpensesUsed />}></Route>
-      </Routes>
-      
-      <Routes>
-        <Route path='/expense_by_date' element={<GetExpneseByDate />}></Route>
-      </Routes>
-
-      <Routes>
-        <Route path='/disel_paid_by' element={<DiselPaidBy />}></Route>
-      </Routes>
-
-      <Routes>
-        <Route path='/expense_paid_by' element={<ExpnesePaidBy />}></Route>
-      </Routes>
-
-      <Routes>
-        <Route path='/expense_dash' element={<ExpenseDashboard />}></Route>
-      </Routes>
-    </div>
-  )
-}
-
-export default Routing

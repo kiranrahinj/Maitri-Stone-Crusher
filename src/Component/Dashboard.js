@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <div className="flex justify-center py-12 ">
       <div className="w-full max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-10">
-        <h1 className="text-4xl sm:text-5xl text-gray-900 text-center mb-12 font-extrabold animate-fade-in  transform transition-all duration-500 ease-in-out hover:scale-105 hover:-translate-y-2  focus:scale-105 focus:-translate-y-2 focus:shadow-xl active:bg-gradient-to-r">
+        <h1 className="text-3xl sm:text-4xl text-gray-900 text-center mb-12 font-extrabold animate-fade-in  transform transition-all duration-500 ease-in-out hover:scale-105 hover:-translate-y-2  focus:scale-105 focus:-translate-y-2 focus:shadow-xl active:bg-gradient-to-r">
           Management Dashboard
         </h1>
 
