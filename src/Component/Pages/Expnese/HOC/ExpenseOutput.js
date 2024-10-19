@@ -2,7 +2,7 @@ import React from "react";
 
 const ExpenseOutput = ({ordersData,tableHeaders}) => {
   return (
-    <div className="container mx-auto px-4 mt-10">
+    <div className="container mx-auto mt-10">
     <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-200px)] shadow-lg rounded-lg border border-gray-200">
         <table className="min-w-full table-auto border-collapse bg-white">
           <thead className="sticky top-0 bg-gray-700 text-white">
