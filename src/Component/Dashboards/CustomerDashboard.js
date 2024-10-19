@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const CustomerDashboard = () => {
   return (
-    <div className="flex justify-center p-6">
+    <div className="flex justify-center p-2">
       <div className="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-10">
         <h1 className="text-2xl md:text-4xl text-gray-800 text-center mb-12 tracking-tight font-extrabold animate-fade-in  transform transition-all duration-500 ease-in-out hover:scale-105 hover:-translate-y-2  focus:scale-105 focus:-translate-y-2 focus:shadow-xl active:bg-gradient-to-r">
           Customer Management Dashboard
