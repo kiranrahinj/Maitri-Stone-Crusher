@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const OrderOutput = ({ordersData}) => {
+  const navigate=useNavigate();
+  const handleEdit=(id)=>{  
+    navigate(`/update-order/${id}`) 
+  }
   return (
     <div className="container mx-auto mt-10">
     <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-200px)] shadow-lg rounded-lg border border-gray-200">
@@ -20,6 +25,7 @@ const OrderOutput = ({ordersData}) => {
               <th className="px-4 py-2 text-left font-semibold">Filling Rate</th>
               <th className="px-4 py-2 text-left font-semibold">Filling By</th>
               <th className="px-4 py-2 text-left font-semibold">Order Created By</th>
+              <th className="px-4 py-2 text-left font-semibold">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -49,6 +55,7 @@ const OrderOutput = ({ordersData}) => {
                 <td className="px-4 py-2">{order.fillingRate}</td>
                 <td className="px-4 py-2">{order.fillingBy}</td>
                 <td className="px-4 py-2">{order.orderCreatedBy}</td>
+                <td className="px-4 py-2"><button className="bg-green-600 w-20 p-1 rounded-xl text-center text-white" onClick={()=>handleEdit(index)}>Edit</button></td>
               </tr>
             ))}
           </tbody>

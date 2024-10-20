@@ -1,5 +1,5 @@
 import NavBar from "./Component/Navbar/NavBar"
-import Routing from "./Routing"
+import Routing from "./Component/Routes/Routing"
 
 function App() {
   return (

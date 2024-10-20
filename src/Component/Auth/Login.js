@@ -10,8 +10,9 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const response = await api.post("/auth/login", data); // Await the API call
-      console.log(response);
-  
+      const token=response.data.data;
+      localStorage.setItem("token",token);
+      
       // If login is successful, navigate to the /order page
       navigate("/order_dash");
     } catch (error) {

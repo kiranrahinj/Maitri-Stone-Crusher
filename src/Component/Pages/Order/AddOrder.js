@@ -1,23 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
 const AddOrder = () => {
-  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-  const [isOtherSelected, setIsOtherSelected] = useState(false);
+  // const [isOtherSelected, setIsOtherSelected] = useState(false);
+  // const [isPending, setIsPending] = useState(false);
 
   const onSubmit = (data) => {
     console.log(data);
     reset();
   };
 
-  const handlePaymentReceivedByChange = (e) => {
-    const value = e.target.value;
-    setIsOtherSelected(value === 'Other');
-    if (value !== 'Other') {
-      setValue('otherPaymentReceiver', '');  // Clear the "other" input if not selected
-    }
-  };
+  // const handlePaymentReceivedByChange = (e) => {
+  //   const value = e.target.value;
+  //   setIsOtherSelected(value === 'Other');
+  //   if (value !== 'Other') {
+  //     setValue('otherPaymentReceiver', '');  // Clear the "other" input if not selected
+  //   }
+  // };
+
+  // const handlePending = (e) => {
+  //   const value = e.target.value;
+  //   setIsPending(value === "Completed");  // Show payment fields when "Completed" is selected
+  // };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-indigo-100 p-6">
@@ -48,19 +54,19 @@ const AddOrder = () => {
             {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>}
           </div>
 
-
-          <div>
+          {/* <div>
             <label className="block text-gray-600 font-medium">Order Status</label>
             <select 
               {...register('orderStatus', { required: 'Order status is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              onChange={handlePending}  // Handle change to check order status
             >
               <option value="select">Select Option</option>
               <option value="Completed">Completed</option>
               <option value="Pending">Pending</option>
             </select>
             {errors.orderStatus && <p className="text-red-500 text-sm mt-1">{errors.orderStatus.message}</p>}
-          </div>
+          </div> */}
 
           <div>
             <label className="block text-gray-600 font-medium">Date</label>
@@ -94,59 +100,64 @@ const AddOrder = () => {
             {errors.rate && <p className="text-red-500 text-sm mt-1">{errors.rate.message}</p>}
           </div>
 
-          <div>
-            <label className="block text-gray-600 font-medium">Payment Status</label>
-            <select 
-              {...register('paymentStatus', { required: 'Payment status is required' })}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="select">Select Option</option>
-              <option value="paid">Paid</option>
-              <option value="unpaid">Unpaid</option>
-              <option value="credit">Credit</option>
-            </select>
-            {errors.paymentStatus && <p className="text-red-500 text-sm mt-1">{errors.paymentStatus.message}</p>}
-          </div>
+          {/* Conditionally show payment fields when order status is "Completed"
+          {isPending && (
+            <>
+              <div>
+                <label className="block text-gray-600 font-medium">Payment Status</label>
+                <select 
+                  {...register('paymentStatus', { required: 'Payment status is required' })}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="select">Select Option</option>
+                  <option value="paid">Paid</option>
+                  <option value="unpaid">Unpaid</option>
+                  <option value="credit">Credit</option>
+                </select>
+                {errors.paymentStatus && <p className="text-red-500 text-sm mt-1">{errors.paymentStatus.message}</p>}
+              </div>
 
-          <div>
-            <label className="block text-gray-600 font-medium">Received Amount</label>
-            <input 
-              type="number" 
-              {...register('receivedAmount', { required: 'Received amount is required' })}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter received amount"
-            />
-            {errors.receivedAmount && <p className="text-red-500 text-sm mt-1">{errors.receivedAmount.message}</p>}
-          </div>
+              <div>
+                <label className="block text-gray-600 font-medium">Received Amount</label>
+                <input 
+                  type="number" 
+                  {...register('receivedAmount', { required: 'Received amount is required' })}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="Enter received amount"
+                />
+                {errors.receivedAmount && <p className="text-red-500 text-sm mt-1">{errors.receivedAmount.message}</p>}
+              </div>
 
-          <div>
-            <label className="block text-gray-600 font-medium">Payment Received To</label>
-            <select 
-              {...register('paymentReceivedBy', { required: 'Select a recipient' })}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              onChange={handlePaymentReceivedByChange}
-            >
-              <option value="select">Select Option</option>
-              <option value="Pinu">Pinu Dada</option>
-              <option value="Yogi">Yogi</option>
-              <option value="Satyam">Satyam</option>
-              <option value="Other">Other</option>
-            </select>
-            {errors.paymentReceivedBy && <p className="text-red-500 text-sm mt-1">{errors.paymentReceivedBy.message}</p>}
-          </div>
+              <div>
+                <label className="block text-gray-600 font-medium">Payment Received To</label>
+                <select 
+                  {...register('paymentReceivedBy', { required: 'Select a recipient' })}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  onChange={handlePaymentReceivedByChange}
+                >
+                  <option value="select">Select Option</option>
+                  <option value="Pinu">Pinu Dada</option>
+                  <option value="Yogi">Yogi</option>
+                  <option value="Satyam">Satyam</option>
+                  <option value="Other">Other</option>
+                </select>
+                {errors.paymentReceivedBy && <p className="text-red-500 text-sm mt-1">{errors.paymentReceivedBy.message}</p>}
+              </div>
 
-          {isOtherSelected && (
-            <div>
-              <label className="block text-gray-600 font-medium">Specify Name</label>
-              <input
-                type="text"
-                {...register('otherPaymentReceiver', { required: 'Please specify the name' })}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter recipient name"
-              />
-              {errors.otherPaymentReceiver && <p className="text-red-500 text-sm mt-1">{errors.otherPaymentReceiver.message}</p>}
-            </div>
-          )}
+              {isOtherSelected && (
+                <div>
+                  <label className="block text-gray-600 font-medium">Specify Name</label>
+                  <input
+                    type="text"
+                    {...register('otherPaymentReceiver', { required: 'Please specify the name' })}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter recipient name"
+                  />
+                  {errors.otherPaymentReceiver && <p className="text-red-500 text-sm mt-1">{errors.otherPaymentReceiver.message}</p>}
+                </div>
+              )}
+            </>
+          )} */}
 
           <div>
             <label className="block text-gray-600 font-medium">Order Fill Rate</label>
@@ -158,6 +169,7 @@ const AddOrder = () => {
             />
             {errors.orderFillRate && <p className="text-red-500 text-sm mt-1">{errors.orderFillRate.message}</p>}
           </div>
+
           <div>
             <label className="block text-gray-600 font-medium">Order Filled By</label>
             <select 
