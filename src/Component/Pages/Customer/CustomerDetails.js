@@ -1,13 +1,21 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {fetchCustomer} from "../../Redux/Slices/AllCustomerSlice"
 
 const CustomerDetails = () => {
   const customersData=useSelector((state)=>state.customer.customer);
   const navigate=useNavigate();
-  
+
+
+  const dispatch=useDispatch()
+  useEffect(() => {    
+    dispatch(fetchCustomer());  // Fetch customer when the component mounts   
+  }, []);
+
+
   const handleEdit=(id)=>{  
-    navigate(`/update-customer/${id}`) 
+    navigate(`/update-customer/${id}`)
   }
   return (
     <div className="container mx-auto px-4 mt-10">
@@ -22,6 +30,8 @@ const CustomerDetails = () => {
             <tr>
               <th className="px-4 py-2 text-left font-semibold">Sr. No.</th> {/* Sr. No. column */}
               <th className="px-4 py-2 text-left font-semibold">Name</th>
+              <th className="px-4 py-2 text-left font-semibold">Order Date</th>
+              <th className="px-4 py-2 text-left font-semibold">Order Location</th>
               <th className="px-4 py-2 text-left font-semibold">Total Amount</th>
               <th className="px-4 py-2 text-left font-semibold">Received Amount</th>
               <th className="px-4 py-2 text-left font-semibold">Remaining Amount</th>
@@ -39,6 +49,8 @@ const CustomerDetails = () => {
               >
                 <td className="px-4 py-2">{index + 1}</td> {/* Serial Number */}
                 <td className="px-4 py-2">{customer.name}</td>
+                <td className="px-4 py-2">{customer.date}</td>
+                <td className="px-4 py-2">{customer.location}</td>
                 <td className="px-4 py-2">{customer.totalAmount}</td>
                 <td className="px-4 py-2 text-green-600 font-semibold">{customer.receivedAmount}</td>
                 <td className="px-4 py-2 text-red-600 font-semibold">{customer.remainingAmount}</td>

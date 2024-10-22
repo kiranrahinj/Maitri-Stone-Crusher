@@ -28,6 +28,7 @@ const CustomerOutput = ({ordersData,tableHeaders}) => {
               >
                 <td className="px-4 py-2">{index + 1}</td>
                 <td className="px-4 py-2">{order.name}</td>
+                <td className="px-4 py-2">{order.date}</td>
                 <td className="px-4 py-2">{order.location}</td>
                 <td className="px-4 py-2">{order.totalAmount}</td>
                 <td className="px-4 py-2">{order.receivedAmount}</td>

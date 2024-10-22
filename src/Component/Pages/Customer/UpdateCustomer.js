@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../Axios/Api';
 import { useDispatch } from 'react-redux';
 import { fetchCustomer } from '../../Redux/Slices/AllCustomerSlice';
@@ -45,11 +45,11 @@ const UpdateCustomer = () => {
       setValue('name', customer.name);
       setValue('totalAmount', customer.totalAmount);
       setValue('receivedAmount', customer.receivedAmount);
-      setValue('remainingAmount', customer.remainingAmount);
       setValue('amountRecievedTo', customer.amountRecievedTo);
     }
   }, [customer, setValue]); // Set value when customer data changes
-
+  
+  const navigate=useNavigate()
   const onSubmit = async (data) => {
     try {
       const res = await api.put(`/user/customer/updateCustomer/${id}`, data);
@@ -58,6 +58,7 @@ const UpdateCustomer = () => {
     } catch (error) {
       console.log(error);
     }
+    navigate("/all_customer") 
     reset(); // Clear form after submission
   };
 
@@ -103,16 +104,7 @@ const UpdateCustomer = () => {
               {errors.receivedAmount && <p className="text-red-500 text-sm mt-1">{errors.receivedAmount.message}</p>}
             </div>
 
-            <div>
-              <label className="block text-gray-600 font-medium">Remaining Amount</label>
-              <input 
-                type="number" 
-                {...register('remainingAmount', { required: 'Remaining amount is required', min: 0 })} 
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" 
-                placeholder="Enter remaining amount" 
-              />
-              {errors.remainingAmount && <p className="text-red-500 text-sm mt-1">{errors.remainingAmount.message}</p>}
-            </div>
+            
 
             <div>
               <label className="block text-gray-600 font-medium">Amount Received By</label>

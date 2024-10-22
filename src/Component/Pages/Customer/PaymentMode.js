@@ -13,6 +13,7 @@ function GetByCustomer() {
             tableHeaders={[
               "Sr. No.",
               "Name",
+              "Date",
               "Location",
               "totalAmount",
               "receivedAmount",

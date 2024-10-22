@@ -26,6 +26,7 @@ import NotFound from '../Pages/Expnese/NotFound';
 import PrivateRoutes from "./PrivateRoutes"
 import UpdateOrder from "../Pages/Order/UpdateOrder"
 import UpdateCustomer from '../Pages/Customer/UpdateCustomer';
+import {ProfitDashboard} from '../Pages/Profit_loss/ProfitDashboard';
 
 const Routing = () => {
   return (
@@ -65,6 +66,10 @@ const Routing = () => {
         <Route path="/disel_paid_by" element={<DieselPaidBy />} />
         <Route path="/expense_paid_by" element={<ExpensePaidBy />} />
         <Route path="/add_expense" element={<AddExpense />} />
+
+        {/* Profit Management Routes */}
+        <Route path="/profit" element={<ProfitDashboard />} />
+        
       </Route>
       {/* 404 Not Found Route */}
       <Route path="*" element={<NotFound />} />
