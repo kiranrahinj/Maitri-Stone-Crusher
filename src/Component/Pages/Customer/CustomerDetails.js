@@ -1,24 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CustomerDetails = () => {
-  const customersData = [
-    {
-      name: "Alice Johnson",
-      totalAmount: "$1500",
-      receivedAmount: "$1000",
-      remainingAmount: "$500",
-      receivedTo: "Bank Transfer",
-    },
-    {
-      name: "Bob Williams",
-      totalAmount: "$2000",
-      receivedAmount: "$1500",
-      remainingAmount: "$500",
-      receivedTo: "Credit Card",
-    },
-    // Add more customer objects as needed
-  ];
-
+  const customersData=useSelector((state)=>state.customer.customer);
+  const navigate=useNavigate();
+  
+  const handleEdit=(id)=>{  
+    navigate(`/update-customer/${id}`) 
+  }
   return (
     <div className="container mx-auto px-4 mt-10">
       <h2 className="bg-gray-700 text-center text-white font-bold p-4 text-2xl mb-6 rounded-md shadow-md">
@@ -36,6 +26,7 @@ const CustomerDetails = () => {
               <th className="px-4 py-2 text-left font-semibold">Received Amount</th>
               <th className="px-4 py-2 text-left font-semibold">Remaining Amount</th>
               <th className="px-4 py-2 text-left font-semibold">Amount Received To</th>
+              <th className="px-4 py-2 text-left font-semibold">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -51,7 +42,8 @@ const CustomerDetails = () => {
                 <td className="px-4 py-2">{customer.totalAmount}</td>
                 <td className="px-4 py-2 text-green-600 font-semibold">{customer.receivedAmount}</td>
                 <td className="px-4 py-2 text-red-600 font-semibold">{customer.remainingAmount}</td>
-                <td className="px-4 py-2">{customer.receivedTo}</td>
+                <td className="px-4 py-2">{customer.amountRecievedTo}</td>
+                <td className="px-4 py-2"><button className="bg-green-600 w-20 p-1 rounded-xl text-center text-white" onClick={()=>handleEdit(customer.id)}>Edit</button></td>
               </tr>
             ))}
           </tbody>

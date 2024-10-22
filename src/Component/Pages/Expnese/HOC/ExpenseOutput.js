@@ -23,8 +23,8 @@ const ExpenseOutput = ({ordersData,tableHeaders}) => {
               >
                 <td className="px-4 py-2">{index + 1}</td>
                 <td className="px-4 py-2">{order.date}</td>
-                <td className="px-4 py-2">{order.diesel}</td>
-                <td className="px-4 py-2">{order.dieselPaidBy}</td>
+                <td className="px-4 py-2">{order.disel}</td>
+                <td className="px-4 py-2">{order.diselPaidBy}</td>
                 <td className="px-4 py-2">{order.expense}</td>
                 <td className="px-4 py-2">{order.expensePaidBy}</td> 
                 <td className="px-4 py-2">{order.remark}</td>                

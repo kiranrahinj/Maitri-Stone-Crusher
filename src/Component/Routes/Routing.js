@@ -10,6 +10,7 @@ import GetOrderByName from '../Pages/Order/GetOrderByName';
 import GetByPaymentStatus from '../Pages/Order/GetByPaymentStatus';
 import GetPaymentRecieved from '../Pages/Order/GetPaymentRecieved';
 import GetByDate from '../Pages/Order/GetByDate'
+import GetByDates from '../Pages/Order/GetByDates'
 import GetFilledBy from '../Pages/Order/GetFilledBy'
 import GetByOrderStatus from '../Pages/Order/GetByOrderStatus'
 import GetByCustomer from '../Pages/Customer/GetByCustomer';
@@ -24,6 +25,7 @@ import AddExpense from '../Pages/Expnese/AddExpense';
 import NotFound from '../Pages/Expnese/NotFound';
 import PrivateRoutes from "./PrivateRoutes"
 import UpdateOrder from "../Pages/Order/UpdateOrder"
+import UpdateCustomer from '../Pages/Customer/UpdateCustomer';
 
 const Routing = () => {
   return (
@@ -48,11 +50,14 @@ const Routing = () => {
         <Route path="/filled-by" element={<GetFilledBy />} />
         <Route path="/order_status" element={<GetByOrderStatus />} />
         <Route path='/update-order/:userId' element={<UpdateOrder/>} />
+        <Route path='/get-order-by-dates' element={<GetByDates/>} />
 
         {/* Customer Management Routes */}
         <Route path="/all_customer" element={<CustomerDetails />} />
         <Route path="/customer_name" element={<GetByCustomer />} />
         <Route path="/paymentMode" element={<PaymentMode />} />
+        <Route path='/update-customer/:customerId' element={<UpdateCustomer/>} />
+
 
         {/* Expense Management Routes */}
         <Route path="/all_expense" element={<ExpensesUsed />} />

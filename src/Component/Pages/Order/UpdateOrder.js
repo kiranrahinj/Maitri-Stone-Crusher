@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import api from '../../Axios/Api';
+import { useDispatch } from 'react-redux';
+import { fetchOrders } from '../../Redux/Slices/AllOrdersSlice';
 
 const UpdateOrder = () => {
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm();
-  
   const [isOtherSelected, setIsOtherSelected] = useState(false);
-  const [isPending, setIsPending] = useState(false);
-  const [order, setOrder] = useState(null); // State to hold fetched order
+  
+  const [order, setOrder] = useState([]); // State to hold fetched order
 
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
-  };
+  
 
   const handlePaymentReceivedByChange = (e) => {
     const value = e.target.value;
@@ -24,44 +23,72 @@ const UpdateOrder = () => {
 
   const handlePending = (e) => {
     const value = e.target.value;
-    setIsPending(value === "Completed");  // Show payment fields when "Completed" is selected
+    setIsPendingOrder(value === "Completed");  // Show payment fields when "Completed" is selected
   };
 
   const { userId } = useParams();
   const id = parseInt(userId, 10);
 
   useEffect(() => {
-    // Simulated fetch call (replace with real API call)
-    const fetchOrder = () => {
-      const ordersData = [
-        // Include the `id` field in your order objects
-        { id: 1, name: "John Doe", location: "New York", status: "Completed", date: "2024-10-18", materialType: "Steel", rate: "$500", paymentStatus: "Paid", receivedAmount: "$500", filling: "50%", fillingBy: "Pinu" },
-        { id: 2, name: "Jane Doe", location: "California", status: "Pending", date: "2024-10-19", materialType: "Iron", rate: "$300", paymentStatus: "Unpaid", receivedAmount: "$0", filling: "80%", fillingBy: "Yogi" },
-      ];
-
-      const foundOrder = ordersData.find((order) => order.id === id);
-      setOrder(foundOrder);
-    };
+  
+    const fetchOrder = async() => {
+      
+      try{
+        const response =await api.get(`/user/order/${id}`);
+        console.log(response.data);
+        setOrder(response.data)
+      }
+      catch(error){
+        console.log(error); 
+      }
+    }
 
     fetchOrder();
   }, [id]);
+  
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+  const onSubmit = async(data) => {
+
+    if(data.status==="Pending"){
+      data.paymentStatus="UnPaid";
+      data.recievedTo="None";
+      data.recievedAmount=0;
+    }
+    try{
+        const res= await api.put(`/user/order/update_order/${id}`,data)
+        console.log(res); 
+        dispatch(fetchOrders())
+    }
+    catch(error){
+      console.log(error)
+    }
+
+    console.log(data);
+    navigate("/orders")
+    reset();
+  };
+
+  const [isPendingOrder, setIsPendingOrder] = useState(false);
 
   useEffect(() => {
     if (order) {
       // Set initial form values using setValue
-      setValue('customerName', order.name);
+      setValue('name', order.name);
       setValue('location', order.location);
-      setValue('orderStatus', order.status);
+      setValue('status', order.status);
       setValue('date', order.date);
-      setValue('typeOfMaterial', order.materialType);
-      setValue('rate', parseFloat(order.rate.replace('$', ''))); // Ensure it's a number
+      setValue('materialType', order.materialType);
+      setValue('rate', parseInt(order.rate)); // Ensure it's a number
       setValue('paymentStatus', order.paymentStatus);
-      setValue('receivedAmount', parseFloat(order.receivedAmount.replace('$', ''))); // Ensure it's a number
-      setValue('orderFillRate', parseFloat(order.filling)); // Ensure it's a number
-      setValue('orderFilledBy', order.fillingBy);
+      setValue('recievedTo', order.recievedTo);
+      setValue('recievedAmount', parseInt(order.recievedAmount));      
+      setValue('filling', parseInt(order.filling)); // Ensure it's a number
+      setValue('fillingBy', order.fillingBy);
+      //recieved to
       
-      // Set the pending state based on the order status
-      setIsPending(order.status === 'Completed');
+    
+      setIsPendingOrder(order.status === 'Completed');
     }
   }, [order, setValue]);
 
@@ -76,11 +103,11 @@ const UpdateOrder = () => {
             <label className="block text-gray-600 font-medium">Customer Name</label>
             <input 
               type="text" 
-              {...register('customerName', { required: 'Customer Name is required' })}
+              {...register('name', { required: 'Customer Name is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter customer name"
             />
-            {errors.customerName && <p className="text-red-500 text-sm mt-1">{errors.customerName.message}</p>}
+            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
           </div>
 
           <div>
@@ -108,11 +135,11 @@ const UpdateOrder = () => {
             <label className="block text-gray-600 font-medium">Type of Material</label>
             <input 
               type="text" 
-              {...register('typeOfMaterial', { required: 'Type of material is required' })}
+              {...register('materialType', { required: 'Type of material is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter type of material"
             />
-            {errors.typeOfMaterial && <p className="text-red-500 text-sm mt-1">{errors.typeOfMaterial.message}</p>}
+            {errors.materialType && <p className="text-red-500 text-sm mt-1">{errors.materialType.message}</p>}
           </div>
 
           <div>
@@ -130,17 +157,17 @@ const UpdateOrder = () => {
             <label className="block text-gray-600 font-medium">Order Fill Rate</label>
             <input 
               type="number" 
-              {...register('orderFillRate', { required: 'Order fill rate is required', min: 0 })}
+              {...register('filling', { required: 'Order fill rate is required', min: 0 })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter order fill rate"
             />
-            {errors.orderFillRate && <p className="text-red-500 text-sm mt-1">{errors.orderFillRate.message}</p>}
+            {errors.filling && <p className="text-red-500 text-sm mt-1">{errors.filling.message}</p>}
           </div>
 
           <div>
             <label className="block text-gray-600 font-medium">Order Filled By</label>
             <select 
-              {...register('orderFilledBy', { required: 'Order filled by is required' })}
+              {...register('fillingBy', { required: 'Order filled by is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter who filled the order"
             >
@@ -149,13 +176,13 @@ const UpdateOrder = () => {
               <option value="Yogi">Yogi</option>
               <option value="Satyam">Satyam</option>
             </select>
-            {errors.orderFilledBy && <p className="text-red-500 text-sm mt-1">{errors.orderFilledBy.message}</p>}
+            {errors.fillingBy && <p className="text-red-500 text-sm mt-1">{errors.fillingBy.message}</p>}
           </div>
 
           <div>
             <label className="block text-gray-600 font-medium">Order Status</label>
             <select 
-              {...register('orderStatus', { required: 'Order status is required' })}
+              {...register('status', { required: 'Order status is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               onChange={handlePending}
             >
@@ -163,11 +190,11 @@ const UpdateOrder = () => {
               <option value="Completed">Completed</option>
               <option value="Pending">Pending</option>
             </select>
-            {errors.orderStatus && <p className="text-red-500 text-sm mt-1">{errors.orderStatus.message}</p>}
+            {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status.message}</p>}
           </div>
 
            {/* Conditionally show payment fields when order status is "Completed" */}
-           {isPending && (
+           {isPendingOrder && (
             <>
               <div>
                 <label className="block text-gray-600 font-medium">Payment Status</label>
@@ -176,9 +203,9 @@ const UpdateOrder = () => {
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="select">Select Option</option>
-                  <option value="paid">Paid</option>
-                  <option value="unpaid">Unpaid</option>
-                  <option value="credit">Credit</option>
+                  <option value="Paid">Paid</option>
+                  <option value="UnPaid">UnPaid</option>
+                  <option value="Credit">Credit</option>
                 </select>
                 {errors.paymentStatus && <p className="text-red-500 text-sm mt-1">{errors.paymentStatus.message}</p>}
               </div>
@@ -187,17 +214,17 @@ const UpdateOrder = () => {
                 <label className="block text-gray-600 font-medium">Received Amount</label>
                 <input 
                   type="number" 
-                  {...register('receivedAmount', { required: 'Received amount is required', min: 0 })}
+                  {...register('recievedAmount', { required: 'Received amount is required', min: 0 })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter received amount"
                 />
-                {errors.receivedAmount && <p className="text-red-500 text-sm mt-1">{errors.receivedAmount.message}</p>}
+                {errors.recievedAmount && <p className="text-red-500 text-sm mt-1">{errors.recievedAmount.message}</p>}
               </div>
 
               <div>
                 <label className="block text-gray-600 font-medium">Payment Received To</label>
                 <select 
-                  {...register('paymentReceivedBy', { required: 'Select who received the payment' })}
+                  {...register('recievedTo', { required: 'Select who received the payment' })}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                   onChange={handlePaymentReceivedByChange}
                 >

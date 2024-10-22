@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import api from "../../Axios/Api"
+import { useDispatch } from 'react-redux';
+import { fetchOrders } from "../../Redux/Slices/AllOrdersSlice";
+import { useNavigate } from 'react-router-dom';
+
 
 const AddOrder = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -7,10 +12,28 @@ const AddOrder = () => {
   // const [isOtherSelected, setIsOtherSelected] = useState(false);
   // const [isPending, setIsPending] = useState(false);
 
-  const onSubmit = (data) => {
+  const dispatch=useDispatch()
+ 
+  const navigate=useNavigate()
+
+  const onSubmit = async (data) => {
     console.log(data);
+
+    try {
+        // Make an API call to add the order
+        const res = await api.post("/user/order/addOrder", data);
+
+        // Dispatch action to fetch all orders after adding the new order
+        dispatch(fetchOrders());
+
+        console.log(res);
+    } catch (error) {
+        console.log(error);
+    }
+    navigate("/orders")
+    // Reset the form
     reset();
-  };
+};
 
   // const handlePaymentReceivedByChange = (e) => {
   //   const value = e.target.value;
@@ -36,11 +59,11 @@ const AddOrder = () => {
             <label className="block text-gray-600 font-medium">Customer Name</label>
             <input 
               type="text" 
-              {...register('customerName', { required: 'Customer Name is required' })}
+              {...register('name', { required: 'Customer Name is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter customer name"
             />
-            {errors.customerName && <p className="text-red-500 text-sm mt-1">{errors.customerName.message}</p>}
+            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
           </div>
 
           <div>
@@ -82,11 +105,11 @@ const AddOrder = () => {
             <label className="block text-gray-600 font-medium">Type of Material</label>
             <input 
               type="text" 
-              {...register('typeOfMaterial', { required: 'Type of material is required' })}
+              {...register('materialType', { required: 'Type of material is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter type of material"
             />
-            {errors.typeOfMaterial && <p className="text-red-500 text-sm mt-1">{errors.typeOfMaterial.message}</p>}
+            {errors.materialType && <p className="text-red-500 text-sm mt-1">{errors.materialType.message}</p>}
           </div>
 
           <div>
@@ -163,17 +186,17 @@ const AddOrder = () => {
             <label className="block text-gray-600 font-medium">Order Fill Rate</label>
             <input 
               type="number" 
-              {...register('orderFillRate', { required: 'Order fill rate is required' })}
+              {...register('filling', { required: 'Order fill rate is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter order fill rate"
             />
-            {errors.orderFillRate && <p className="text-red-500 text-sm mt-1">{errors.orderFillRate.message}</p>}
+            {errors.filling && <p className="text-red-500 text-sm mt-1">{errors.filling.message}</p>}
           </div>
 
           <div>
             <label className="block text-gray-600 font-medium">Order Filled By</label>
             <select 
-              {...register('orderFilledBy', { required: 'Order filled by is required' })}
+              {...register('fillingBy', { required: 'Order filled by is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter who filled the order"
             >
@@ -182,7 +205,7 @@ const AddOrder = () => {
               <option value="Yogi">Yogi</option>
               <option value="Satyam">Satyam</option>
             </select>
-            {errors.orderFilledBy && <p className="text-red-500 text-sm mt-1">{errors.orderFilledBy.message}</p>}
+            {errors.fillingBy && <p className="text-red-500 text-sm mt-1">{errors.fillingBy.message}</p>}
           </div>
 
           <div>

@@ -1,26 +1,9 @@
 import React from 'react'
 import CustomerFilter from './HOC/CustomerFilter'
+import { useSelector } from 'react-redux';
 
 function GetByCustomer() {
-    const customersData = [
-      {
-        name: "Alice Johnson",
-        totalAmount: "$1500", 
-        location:"Manchar",
-        receivedAmount: "$1000",
-        remainingAmount: "$500",
-        paymentMode: "Bank Transfer",
-      },
-      {
-        name: "Bob Williams",
-        totalAmount: "$2000",
-        location:"Avasari",
-        receivedAmount: "$1500",
-        remainingAmount: "$500",
-        paymentMode: "Credit Card",
-      },
-    // Add more customer objects as needed
-  ];
+  const customersData=useSelector((state)=>state.customer.customer);
       return (
         <div>
           <CustomerFilter 
@@ -34,7 +17,8 @@ function GetByCustomer() {
               "totalAmount",
               "receivedAmount",
               "remainingAmount",
-              "paymentMode"
+              "amountRecievedTo",
+              "Action"
             ]}
           />
         </div>

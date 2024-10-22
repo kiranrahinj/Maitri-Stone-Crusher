@@ -1,71 +1,52 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import OrderOutput from './CustomerOutput'
+import CustomerOutput from './CustomerOutput'; // Ensure you import the correct component
 
-const OrderFilter = ({ orders, filterBy, filterLabel, tableHeaders }) => {
+const CustomerFilter = ({ orders, filterBy, filterLabel, tableHeaders }) => {
   const [filterValue, setFilterValue] = useState('');
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    filterOrders();
+    filterOrders(); // Filter orders when the form is submitted
   };
 
   const handleInputChange = (e) => {
     const input = e.target.value;
     setFilterValue(input);
-    input ? updateSuggestions(input) : clearSuggestions();
+    input ? updateSuggestions(input) : clearSuggestions(); // Update suggestions or clear them based on input
   };
 
   const filterOrders = () => {
-    const matchingOrders = orders.filter(order =>
-      order[filterBy].toLowerCase().includes(filterValue.toLowerCase())
-    );
-    setFilteredOrders(matchingOrders);
+    const matchingOrders = orders.filter(order => {
+      const value = order[filterBy];
+      return typeof value === 'string' && value.toLowerCase().includes(filterValue.toLowerCase());
+    });
+    setFilteredOrders(matchingOrders); // Update state with matching orders
   };
 
   const updateSuggestions = (input) => {
     const matchingSuggestions = orders
-      .filter(order => order[filterBy].toLowerCase().includes(input.toLowerCase()))
+      .filter(order => {
+        const value = order[filterBy];
+        return typeof value === 'string' && value.toLowerCase().includes(input.toLowerCase());
+      })
       .map(order => order[filterBy]);
 
-    const uniqueSuggestions = [...new Set(matchingSuggestions)];
+    const uniqueSuggestions = [...new Set(matchingSuggestions)]; // Ensure suggestions are unique
     setSuggestions(uniqueSuggestions);
   };
 
   const clearSuggestions = () => {
-    setSuggestions([]);
+    setSuggestions([]); // Clear suggestions
   };
 
   const handleSuggestionClick = (suggestion) => {
-    setFilterValue(suggestion);
+    setFilterValue(suggestion); // Set filter value to the clicked suggestion
     clearSuggestions(); // Clear suggestions after selecting
     filterOrders(); // Filter orders immediately after selecting a suggestion
   };
-
-//   const renderOrderTable = () => (
-//     <div className="mt-6 overflow-x-auto">
-//       <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow">
-//         <thead className="bg-gray-200">
-//           <tr>
-//             {tableHeaders.map((header, index) => (
-//               <th key={index} className="px-4 py-2 text-left font-semibold">{header}</th>
-//             ))}
-//           </tr>
-//         </thead>
-//         <tbody className="bg-white">
-//           {filteredOrders.map((order, index) => (
-//             <tr key={order.id} className="hover:bg-gray-100 transition duration-200">
-//               {tableHeaders.map((header, index) => (
-//                 <td key={index} className="px-4 py-2 border">{order[header.toLowerCase().replace(/ /g, '')]}</td>
-//               ))}
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -104,22 +85,22 @@ const OrderFilter = ({ orders, filterBy, filterLabel, tableHeaders }) => {
             Search Orders
           </button>
         </form>
-
-       
       </div>
-       {/* Display filtered orders in table format */}
-       {filteredOrders.length > 0 ? <OrderOutput ordersData={filteredOrders} tableHeaders={tableHeaders} /> : filterValue && (
-          <p className="text-red-500 mt-4 text-center">No orders found for "{filterValue}".</p>
-        )}
+      {/* Display filtered orders in table format */}
+      {filteredOrders.length > 0 ? (
+        <CustomerOutput ordersData={filteredOrders} tableHeaders={tableHeaders} />
+      ) : filterValue && (
+        <p className="text-red-500 mt-4 text-center">No orders found for "{filterValue}".</p>
+      )}
     </div>
   );
 };
 
-OrderFilter.propTypes = {
+CustomerFilter.propTypes = {
   orders: PropTypes.array.isRequired,
   filterBy: PropTypes.string.isRequired, // Field to filter by
   filterLabel: PropTypes.string.isRequired, // Label for the input
   tableHeaders: PropTypes.array.isRequired, // Headers for the table
 };
 
-export default OrderFilter;
+export default CustomerFilter;

@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CustomerOutput = ({ordersData,tableHeaders}) => {
+  const navigate=useNavigate();
+  const handleEdit=(id)=>{  
+    navigate(`/update-customer/${id}`) 
+  }
   return (
     <div className="container mx-auto mt-10">
     <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-200px)] shadow-lg rounded-lg border border-gray-200">
@@ -27,8 +32,8 @@ const CustomerOutput = ({ordersData,tableHeaders}) => {
                 <td className="px-4 py-2">{order.totalAmount}</td>
                 <td className="px-4 py-2">{order.receivedAmount}</td>
                 <td className="px-4 py-2">{order.remainingAmount}</td> 
-                <td className="px-4 py-2">{order.paymentMode}</td>                
-                
+                <td className="px-4 py-2">{order.amountRecievedTo}</td>                
+                <td className="px-4 py-2"><button className="bg-green-600 w-20 p-1 rounded-xl text-center text-white" onClick={()=>handleEdit(order.id)}>Edit</button></td>
               </tr>
             ))}
           </tbody>

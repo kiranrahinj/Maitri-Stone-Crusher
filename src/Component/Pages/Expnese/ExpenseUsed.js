@@ -1,25 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const ExpensesUsed = () => {
-  const expensesData = [
-    {
-      date: "2024-10-18",
-      diesel: "$200",
-      dieselPaidBy: "John Smith",
-      expense: "$500",
-      expensePaidBy: "Company Account",
-      remark: "Fuel for transportation",
-    },
-    {
-      date: "2024-10-17",
-      diesel: "$150",
-      dieselPaidBy: "Jane Doe",
-      expense: "$300",
-      expensePaidBy: "Personal Funds",
-      remark: "Miscellaneous office supplies",
-    },
-    // Add more expense objects as needed
-  ];
+  
+  const expensesData=useSelector((state)=>state.expense.expense);
 
   return (
     <div className="container mx-auto px-4 mt-10">
@@ -39,6 +23,7 @@ const ExpensesUsed = () => {
               <th className="px-4 py-2 text-left font-semibold">Expense</th>
               <th className="px-4 py-2 text-left font-semibold">Expense Paid By</th>
               <th className="px-4 py-2 text-left font-semibold">Remark</th>
+              <th className="px-4 py-2 text-left font-semibold">Expense Created By</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -51,11 +36,12 @@ const ExpensesUsed = () => {
               >
                 <td className="px-4 py-2">{index + 1}</td> {/* Serial Number */}
                 <td className="px-4 py-2">{expense.date}</td>
-                <td className="px-4 py-2">{expense.diesel}</td>
-                <td className="px-4 py-2">{expense.dieselPaidBy}</td>
+                <td className="px-4 py-2">{expense.disel}</td>
+                <td className="px-4 py-2">{expense.diselPaidBy}</td>
                 <td className="px-4 py-2 text-green-600 font-semibold">{expense.expense}</td>
                 <td className="px-4 py-2">{expense.expensePaidBy}</td>
                 <td className="px-4 py-2">{expense.remark}</td>
+                <td className="px-4 py-2">{expense.expenseCreatedBy}</td>
               </tr>
             ))}
           </tbody>

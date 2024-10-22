@@ -1,29 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import api from "../Axios/Api";
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
+import { loginSuccess } from "../Redux/Slices/AuthSlice"; // Correctly import action
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const navigate=useNavigate();
+  const [loginError, setLoginError] = useState(''); // State for storing login errors
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const onSubmit = async (data) => {
+    // Remove the old token if it exists
+    const oldToken = localStorage.getItem("token");
+    if (oldToken) localStorage.removeItem("token");
+    
     try {
-      const response = await api.post("/auth/login", data); // Await the API call
-      const token=response.data.data;
-      localStorage.setItem("token",token);
-      
-      // If login is successful, navigate to the /order page
-      navigate("/order_dash");
+      const response = await api.post("/auth/login", data); 
+      const token = response.data.data; // Adjust to match the actual structure of your API response
+      if (token) {
+        // Clear any previous errors
+        setLoginError('');
+
+        // Save token in both Redux state and localStorage
+        dispatch(loginSuccess(token));
+        console.log("Token saved successfully.");
+        
+        // Navigate to dashboard after successful login
+        navigate("/dashboard");
+      } else {
+        // Show login error after 5 seconds and then hide it after another 5 seconds
+        setLoginError("Login failed. Please check your credentials.");
+        // Clear error after 5 seconds
+        setTimeout(() => {
+          setLoginError('');
+        }, 5500); // 5 seconds after error shows up
+      }
     } catch (error) {
       console.error("Error during login:", error);
+      
+      // Show error message from API response or default message after 5 seconds
+      setTimeout(() => {
+        setLoginError(error.response?.data?.message || "Login failed. Please try again.");
+      }, 500);
+
+      // Clear error after 5 seconds
+      setTimeout(() => {
+        setLoginError('');
+      }, 5500); // 5 seconds after error shows up
     }
   };
 
   return (
     <div>
-        <div className="w-full md:max-w-md max-w-sm mx-auto bg-white shadow-lg rounded-lg p-8 mt-32 ">
+        <div className="w-full md:max-w-md max-w-sm mx-auto bg-white shadow-lg rounded-lg p-8 mt-32">
           <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Login</h2>
+
+          {/* Conditionally display login error */}
+          {loginError && (
+            <p className="text-red-500 text-center mb-4">{loginError}</p>
+          )}
 
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* Email Field */}

@@ -1,7 +1,15 @@
-import React from 'react';
+import React,{useEffect} from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {fetchExpense} from "../Redux/Slices/ExpenseSlice"
 
 const ExpenseDashboard = () => {
+
+  const dispatch=useDispatch()
+  useEffect(() => {    
+    dispatch(fetchExpense());  // Fetch customer when the component mounts   
+  }, []);
+
   return (
     <div className="flex justify-center  p-2">
       <div className="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-10">

@@ -1,31 +1,15 @@
 import React from 'react'
 import CustomerFilter from './HOC/CustomerFilter'
-function PaymentMode() {
-    const customersData = [
-        {
-          name: "Alice Johnson",
-          totalAmount: "$1500", 
-          location:"Manchar",
-          receivedAmount: "$1000",
-          remainingAmount: "$500",
-          paymentMode: "Bank Transfer",
-        },
-        {
-          name: "Bob Williams",
-          totalAmount: "$2000",
-          location:"Avasari",
-          receivedAmount: "$1500",
-          remainingAmount: "$500",
-          paymentMode: "Credit Card",
-        },
-        // Add more customer objects as needed
-      ];
+import { useSelector } from 'react-redux';
+
+function GetByCustomer() {
+  const customersData=useSelector((state)=>state.customer.customer);
       return (
         <div>
           <CustomerFilter 
             orders={customersData} 
-            filterBy="paymentMode" 
-            filterLabel="Payment Mode" 
+            filterBy="amountRecievedTo" 
+            filterLabel="Amount Recieved To" 
             tableHeaders={[
               "Sr. No.",
               "Name",
@@ -33,11 +17,12 @@ function PaymentMode() {
               "totalAmount",
               "receivedAmount",
               "remainingAmount",
-              "paymentMode"
+              "Amount Recieved To",
+              "Action"
             ]}
           />
         </div>
       );
 }
 
-export default PaymentMode
+export default GetByCustomer

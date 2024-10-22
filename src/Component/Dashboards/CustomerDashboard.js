@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {fetchCustomer} from "../Redux/Slices/AllCustomerSlice"
 
 const CustomerDashboard = () => {
+
+  const dispatch=useDispatch()
+  useEffect(() => {    
+    dispatch(fetchCustomer());  // Fetch customer when the component mounts   
+  }, []);
+
+
   return (
     <div className="flex justify-center p-2">
       <div className="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-10">
@@ -29,8 +38,8 @@ const CustomerDashboard = () => {
           {/* Payment Mode */}
           <Link to="/paymentMode">
             <div className="bg-gradient-to-br from-yellow-400 to-yellow-600 text-white rounded-lg p-8 shadow-lg transition-transform transform hover:scale-105 hover:shadow-2xl flex flex-col items-center justify-center">
-              <h2 className="text-2xl font-semibold text-center mb-2">Payment Method</h2>
-              <p className="text-sm text-center">Check the payment methods used by customers</p>
+              <h2 className="text-2xl font-semibold text-center mb-2">Payment Recieved To</h2>
+              <p className="text-sm text-center">Check the person who received the payment.</p>
             </div>
           </Link>
         </div>

@@ -1,12 +1,31 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import api from "../../Axios/Api"
+import { useDispatch } from 'react-redux';
+import {fetchExpense} from "../../Redux/Slices/ExpenseSlice"
+import { useNavigate } from 'react-router-dom';
 
 const AddExpense = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const dispatch=useDispatch();
+  const navigate=useNavigate()
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     console.log(data);
+    try {
+      // Make an API call to add the order
+      const res = await api.post("/user/expsense/addExpense", data);
+
+      // Dispatch action to fetch all orders after adding the new order
+      dispatch(fetchExpense());
+
+      console.log(res);
+    } catch (error) {
+        console.log(error);
+    }
+
     reset();
+    navigate("/all_expense")
   };
 
   return (
@@ -31,7 +50,7 @@ const AddExpense = () => {
             <input 
               type="number" 
               step="0.01"
-              {...register('dieselPrice', { required: 'Diesel price is required' })}
+              {...register('disel', { required: 'Diesel price is required' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               placeholder="Enter diesel price"
             />
@@ -41,10 +60,10 @@ const AddExpense = () => {
           <div>
             <label className="block text-gray-600 font-medium">Diesel Paid By</label>
             <select 
-              {...register('dieselPaidBy', { required: 'Select who paid for the diesel' })}
+              {...register('diselPaidBy', { required: 'Select who paid for the diesel' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
-              <option value="select">Select Option</option>
+              <option value="none">Select Option</option>
               <option value="Pinu">Pinu</option>
               <option value="Yogi">Yogi</option>
               <option value="Satyam">Satyam</option>
@@ -69,7 +88,7 @@ const AddExpense = () => {
               {...register('expensePaidBy', { required: 'Select who paid the expense' })}
               className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
-              <option value="select">Select Option</option>
+              <option value="none">Select Option</option>
               <option value="Pinu">Pinu</option>
               <option value="Yogi">Yogi</option>
               <option value="Satyam">Satyam</option>

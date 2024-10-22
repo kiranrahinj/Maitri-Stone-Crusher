@@ -1,7 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchOrders } from "../Redux/Slices/AllOrdersSlice";
+import { useEffect } from 'react';
 
 const OrderDashboard = () => {
+
+  const dispatch=useDispatch()
+  useEffect(() => {    
+    dispatch(fetchOrders());  // Fetch orders when the component mounts   
+  }, []);
+
   return (
     <div className="flex justify-center p-2">
       <div className="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-10">

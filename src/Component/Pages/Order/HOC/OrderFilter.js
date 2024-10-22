@@ -1,47 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import OrderOutput from './OrderOutput'
 
-const OrderFilter = ({ orders, filterBy, filterLabel, tableHeaders }) => {
+const OrderFilter = ({ orders, filterBy, filterLabel}) => {
+  const [order, setOrder] = useState([]);
   const [filterValue, setFilterValue] = useState('');
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
 
+  useEffect(()=>{
+    const token=localStorage.getItem("token");
+  if(!!token){
+    setOrder(orders);
+  }
+  },[])
+  
   const handleSearch = (e) => {
     e.preventDefault();
-    filterOrders();
+    if (filterValue) {
+      filterOrders();
+    }
   };
-
+  
   const handleInputChange = (e) => {
     const input = e.target.value;
     setFilterValue(input);
-    input ? updateSuggestions(input) : clearSuggestions();
+  
+    if (input) {
+      updateSuggestions(input);
+    } else {
+      clearSuggestions();
+    }
   };
-
+  
   const filterOrders = () => {
-    const matchingOrders = orders.filter(order =>
-      order[filterBy].toLowerCase().includes(filterValue.toLowerCase())
+    if (!filterValue) return; // Avoid filtering when filterValue is empty
+  
+    const matchingOrders = order.filter(order =>
+      order[filterBy]?.toLowerCase().includes(filterValue.toLowerCase()) // Using optional chaining in case filterBy is not present
     );
     setFilteredOrders(matchingOrders);
   };
-
+  
   const updateSuggestions = (input) => {
-    const matchingSuggestions = orders
-      .filter(order => order[filterBy].toLowerCase().includes(input.toLowerCase()))
+    const matchingSuggestions = order
+      .filter(order => order[filterBy]?.toLowerCase().includes(input.toLowerCase()))
       .map(order => order[filterBy]);
-
+  
     const uniqueSuggestions = [...new Set(matchingSuggestions)];
     setSuggestions(uniqueSuggestions);
   };
-
+  
   const clearSuggestions = () => {
     setSuggestions([]);
   };
-
+  
   const handleSuggestionClick = (suggestion) => {
     setFilterValue(suggestion);
     clearSuggestions(); // Clear suggestions after selecting
-    filterOrders(); // Filter orders immediately after selecting a suggestion
+    filterOrders(); // Filter order immediately after selecting a suggestion
   };
 
   // const renderOrderTable = () => (
@@ -107,16 +124,16 @@ const OrderFilter = ({ orders, filterBy, filterLabel, tableHeaders }) => {
 
        
       </div>
-       {/* Display filtered orders in table format */}
+       {/* Display filtered order in table format */}
        {filteredOrders.length > 0 ? <OrderOutput ordersData={filteredOrders} /> : filterValue && (
-          <p className="text-red-500 mt-4 text-center">No orders found for "{filterValue}".</p>
+          <p className="text-red-500 mt-4 text-center">No order found for "{filterValue}".</p>
         )}
     </div>
   );
 };
 
 OrderFilter.propTypes = {
-  orders: PropTypes.array.isRequired,
+  order: PropTypes.array.isRequired,
   filterBy: PropTypes.string.isRequired, // Field to filter by
   filterLabel: PropTypes.string.isRequired, // Label for the input
   tableHeaders: PropTypes.array.isRequired, // Headers for the table
