@@ -48,6 +48,7 @@ const UpdateOrder = () => {
   
   const dispatch=useDispatch();
   const navigate=useNavigate();
+
   const onSubmit = async(data) => {
 
     if(data.status==="Pending"){
@@ -55,8 +56,28 @@ const UpdateOrder = () => {
       data.recievedTo="None";
       data.recievedAmount=0;
     }
+    const formDatab = new FormData();
+    for (const key in data) {
+      formDatab.append(key, data[key]);
+    }
+    formDatab.append("order_created_by",order.orderCreatedBy);
     try{
         const res= await api.put(`/user/order/update_order/${id}`,data)
+        fetch(
+          "https://script.google.com/macros/s/AKfycbx1DtOQq3yMfqzZz64uBsUpAp-hcpBLP8r11opBUPzfRoAMDFTNsQUSQ1TW1-C8U-WU/exec",
+          {
+            method: "POST",
+            body: formDatab
+          }
+        )
+          .then((res) => res.json())
+          .then((result) => {
+            console.log("Form submitted successfully:", result);
+          })
+          .catch((error) => {
+            console.error("Error submitting form:", error);
+          });
+
         console.log(res); 
         dispatch(fetchOrders())
     }
@@ -85,6 +106,7 @@ const UpdateOrder = () => {
       setValue('recievedAmount', parseInt(order.recievedAmount));      
       setValue('filling', parseInt(order.filling)); // Ensure it's a number
       setValue('fillingBy', order.fillingBy);
+
       //recieved to
       
     

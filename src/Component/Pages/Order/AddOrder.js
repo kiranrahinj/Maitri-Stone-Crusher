@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import api from "../../Axios/Api"
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,6 @@ const AddOrder = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-
     try {
         // Make an API call to add the order
         const res = await api.post("/user/order/addOrder", data);
