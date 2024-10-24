@@ -86,8 +86,8 @@ const UpdateOrder = () => {
     }
 
     console.log(data);
-    navigate("/orders")
     reset();
+    navigate("/orders")
   };
 
   const [isPendingOrder, setIsPendingOrder] = useState(false);

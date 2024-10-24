@@ -94,13 +94,13 @@ const UserCard = ({ user }) => {
           Spent: <span style={{
             color: '#e74c3c', // Red for spent
             fontWeight: '600',
-          }}>${user.spent.toFixed(2)}</span>
+          }}>{user.spent.toFixed(2)}</span>
         </p>
         <p>
           Received: <span style={{
             color: '#27ae60', // Green for received
             fontWeight: '600',
-          }}>${user.received.toFixed(2)}</span>
+          }}>{user.received.toFixed(2)}</span>
         </p>
       </div>
     </div>

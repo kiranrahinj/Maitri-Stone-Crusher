@@ -69,7 +69,7 @@ export const MonthlyProfitOverview = () => {
       >
         <h3 style={{ fontSize: '1.75rem', marginBottom: '0.5rem', color: '#333' }}>{profit.month}</h3>
         <p style={{ fontSize: '2.5rem', fontWeight: '600', color: profit.amount >= 0 ? '#4CAF50' : '#F44336' }}>
-          ${profit.amount.toFixed(2)}
+          {profit.amount.toFixed(2)}
         </p>
         <div
           style={{

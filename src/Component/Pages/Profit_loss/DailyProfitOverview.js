@@ -57,7 +57,7 @@ export const DailyProfitOverview = () => {
       >
         <p style={styles.date}>{profit.date}</p>
         <p style={{ ...styles.amount, color: profit.amount >= 0 ? '#4CAF50' : '#F44336' }}>
-          ${profit.amount.toFixed(2)}
+          {profit.amount.toFixed(2)}
         </p>
         <div
           style={{
