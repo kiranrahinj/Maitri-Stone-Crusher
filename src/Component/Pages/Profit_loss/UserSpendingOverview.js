@@ -102,6 +102,12 @@ const UserCard = ({ user }) => {
             fontWeight: '600',
           }}>{user.received.toFixed(2)}</span>
         </p>
+        <p>
+          OutStanding: <span style={{
+            color: '#27ae60', // Green for received
+            fontWeight: '600',
+          }}>{user.received.toFixed(2)-user.spent.toFixed(2)}</span>
+        </p>
       </div>
     </div>
   );
