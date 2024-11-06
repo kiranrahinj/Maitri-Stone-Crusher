@@ -17,6 +17,7 @@ const AddOrder = () => {
   const navigate=useNavigate()
 
   const onSubmit = async (data) => {
+
     console.log(data);
     try {
         // Make an API call to add the order
@@ -24,14 +25,14 @@ const AddOrder = () => {
 
         // Dispatch action to fetch all orders after adding the new order
         dispatch(fetchOrders());
-
+        // Reset the form
+        reset();
         console.log(res);
     } catch (error) {
         console.log(error);
     }
     navigate("/orders")
-    // Reset the form
-    reset();
+    
 };
 
   // const handlePaymentReceivedByChange = (e) => {
