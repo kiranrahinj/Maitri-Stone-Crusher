@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import api from "../../Axios/Api";
+import Loader from "../../Loader"
 
 export const MonthlyProfitOverview = () => {
   const [monthlyProfits, setMonthlyProfits] = useState([]);
@@ -91,7 +92,7 @@ export const MonthlyProfitOverview = () => {
     <div style={{ padding: '2rem', maxWidth: '900px', margin: '0 auto', backgroundColor: '#f9f9f9', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)' }}>
       <h2 style={{ textAlign: 'center', fontSize: '2.5rem', fontWeight: '700', marginBottom: '2rem', color: '#333' }}>Monthly Profit Overview</h2>
       {loading ? ( // Show loading indicator while fetching
-        <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#888' }}>Loading...</p>
+        <Loader/>
       ) : error ? ( // Show error message if there was an error
         <p style={{ textAlign: 'center', fontSize: '1.2rem', color: '#F44336' }}>{error}</p>
       ) : monthlyProfits.length > 0 ? (

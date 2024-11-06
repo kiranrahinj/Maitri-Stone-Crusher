@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import api from "../../Axios/Api";
+import Loader from "../../Loader"
 
 export const DailyProfitOverview = () => {
   const [dailyProfits, setDailyProfits] = useState([]);
@@ -79,7 +80,7 @@ export const DailyProfitOverview = () => {
     <div style={styles.container}>
       <h2 style={styles.header}>Daily Profit Overview - Last 5 Days</h2>
       {loading ? ( // Show loading indicator while fetching
-        <p style={styles.loading}>Loading...</p>
+        <Loader/>
       ) : error ? ( // Show error message if there was an error
         <p style={styles.error}>{error}</p>
       ) : dailyProfits.length > 0 ? (

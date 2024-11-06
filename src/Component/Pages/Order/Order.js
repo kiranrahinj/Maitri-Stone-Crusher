@@ -2,7 +2,7 @@ import React, { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchOrders } from "../../Redux/Slices/AllOrdersSlice";
-
+import Loader from "../../Loader"
 // import api from "../../Axios/Api";
 
 const Order = () => {
@@ -38,7 +38,7 @@ const Order = () => {
   }, []);
 
   if (status === 'loading') {
-      return <div>Loading...</div>;
+      return <Loader/>
   }
 
   if (status === 'failed') {
@@ -79,7 +79,7 @@ const Order = () => {
                   index % 2 === 0 ? "bg-gray-50" : "bg-white"
                 }`}
               >
-                <td className="px-4 py-2">{index + 1}</td>
+                <td className="px-4 py-2">{order.id}</td>
                 <td className="px-4 py-2">{order.name}</td>
                 <td className="px-4 py-2">{order.location}</td>
                 <td className="px-4 py-2">{order.date}</td>

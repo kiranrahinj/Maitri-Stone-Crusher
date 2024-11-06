@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'; 
 import { FaUser } from 'react-icons/fa'; // Importing icons from react-icons
 import api from "../../Axios/Api"
+import Loader from "../../Loader"
 const users = ['Pinu', 'Yogi', 'Satyam']; // Define the user names you want to fetch data for
 
 export const UserSpendingOverview = () => {
@@ -39,9 +40,7 @@ export const UserSpendingOverview = () => {
     fetchSpendings();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -52,6 +51,9 @@ export const UserSpendingOverview = () => {
       <h2 style={{ textAlign: 'center', fontSize: '1.8rem', fontWeight: '600', marginBottom: '1rem' }}>
         User Spending Overview
       </h2>
+      {
+        loading && <Loader/>
+      }
       {userData.map((user, index) => (
         <UserCard key={index} user={{ name: users[index], ...user }} />
       ))}

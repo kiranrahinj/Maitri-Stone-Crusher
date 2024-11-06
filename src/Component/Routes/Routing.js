@@ -27,6 +27,7 @@ import PrivateRoutes from "./PrivateRoutes"
 import UpdateOrder from "../Pages/Order/UpdateOrder"
 import UpdateCustomer from '../Pages/Customer/UpdateCustomer';
 import {ProfitDashboard} from '../Pages/Profit_loss/ProfitDashboard';
+import Loader from '../Loader';
 
 const Routing = () => {
   return (
@@ -73,6 +74,7 @@ const Routing = () => {
       </Route>
       {/* 404 Not Found Route */}
       <Route path="*" element={<NotFound />} />
+      <Route path='/loader' element={<Loader/>}/>
     </Routes>
     
   );
