@@ -97,7 +97,6 @@ const Order = () => {
                 <td className="px-4 py-2">{order.paymentStatus}</td>
                 <td className="px-4 py-2">{order.recievedAmount}</td>
                 <td className="px-4 py-2">{order.recievedTo}</td>
-                
                 <td className="px-4 py-2">{order.orderCreatedBy}</td>
                 <td className="px-4 py-2"><button className="bg-green-600 w-20 p-1 rounded-xl text-center text-white" onClick={()=>handleEdit(order.id)}>Edit</button></td>
               </tr>
