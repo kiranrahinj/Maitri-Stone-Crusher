@@ -14,6 +14,7 @@ export const UserSpendingOverview = () => {
       try {
         const startOfMonth = new Date(); // Set your start date
         startOfMonth.setDate(1); // First day of the month
+        startOfMonth.setMonth(7);
         const endOfMonth = new Date(); // Current date
 
         const fetchPromises = users.map(userName =>
@@ -105,11 +106,20 @@ const UserCard = ({ user }) => {
           }}>{user.received.toFixed(2)}</span>
         </p>
         <p>
-          OutStanding: <span style={{
-            color: '#27ae60', // Green for received
-            fontWeight: '600',
-          }}>{user.received.toFixed(2)-user.spent.toFixed(2)}</span>
+          Outstanding:{" "}
+          <span 
+            style={(user.received.toFixed(2) - user.spent.toFixed(2)) < 0 ? {
+              color: '#e74c3c', // Green for received
+              fontWeight: '600'
+            } : {
+              color: '#27ae60', // Green for received
+              fontWeight: '600'
+            }}
+          >
+            {(user.received - user.spent).toFixed(2)}
+          </span>
         </p>
+
       </div>
     </div>
   );

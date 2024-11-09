@@ -6,7 +6,7 @@ import { UserSpendingOverview } from './UserSpendingOverview'; // Import your us
 export const ProfitDashboard = () => {
   return (
     <div style={styles.dashboardContainer}>
-      <h1 style={styles.header}>Profile Dashboard</h1>
+      <h1 style={styles.header}>Profit Dashboard</h1>
       <div style={styles.gridContainer}>
         <div style={{ ...styles.card, ...styles.monthlyProfitCard }}>
           <MonthlyProfitOverview />
