@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchOrders } from "../../Redux/Slices/AllOrdersSlice";
@@ -32,7 +32,8 @@ const Order = () => {
   console.log("all Orders");
   const dispatch = useDispatch();
   const { orders, status, error } = useSelector((state) => state.orders);
-
+  
+ 
   useEffect(() => {    
     dispatch(fetchOrders());  // Fetch orders when the component mounts   
   }, []);
@@ -79,7 +80,7 @@ const Order = () => {
                   index % 2 === 0 ? "bg-gray-50" : "bg-white"
                 }`}
               >
-                <td className="px-4 py-2">{order.id}</td>
+                <td className="px-4 py-2">{orders.length-index}</td> 
                 <td className="px-4 py-2">{order.name}</td>
                 <td className="px-4 py-2">{order.location}</td>
                 <td className="px-4 py-2">{order.date}</td>

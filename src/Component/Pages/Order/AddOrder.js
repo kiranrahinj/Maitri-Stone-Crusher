@@ -204,6 +204,8 @@ const AddOrder = () => {
               <option value="Pinu">Pinu Dada</option>
               <option value="Yogi">Yogi</option>
               <option value="Satyam">Satyam</option>
+              <option value="Credit">Credit</option>
+              <option value="Shah Mama">Shah Mama</option>
             </select>
             {errors.fillingBy && <p className="text-red-500 text-sm mt-1">{errors.fillingBy.message}</p>}
           </div>
