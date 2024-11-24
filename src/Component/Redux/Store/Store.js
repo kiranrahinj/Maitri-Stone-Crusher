@@ -19,6 +19,7 @@ import AllOrderReducer from "../Slices/AllOrdersSlice";
 import AuthReducer from "../Slices/AuthSlice";
 import Customer from "../Slices/AllCustomerSlice";
 import Expenses from "../Slices/ExpenseSlice";
+import DateSlice from "../Slices/DateSlice"
 
 // Configuration for redux-persist
 const persistConfig = {
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
     auth: AuthReducer,
     customer: Customer,
     expense: Expenses,
+    dates:DateSlice,
   });
 
 // Wrap the rootReducer with persistReducer
