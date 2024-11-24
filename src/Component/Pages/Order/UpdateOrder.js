@@ -197,6 +197,8 @@ const UpdateOrder = () => {
               <option value="Pinu">Pinu Dada</option>
               <option value="Yogi">Yogi</option>
               <option value="Satyam">Satyam</option>
+              <option value="Credit Crusher">Credit Crusher</option>
+              <option value="Shah Mama Credit">Shah Mama Credit</option>
             </select>
             {errors.fillingBy && <p className="text-red-500 text-sm mt-1">{errors.fillingBy.message}</p>}
           </div>
