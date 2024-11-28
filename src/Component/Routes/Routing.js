@@ -28,6 +28,7 @@ import UpdateOrder from "../Pages/Order/UpdateOrder"
 import UpdateCustomer from '../Pages/Customer/UpdateCustomer';
 import {ProfitDashboard} from '../Pages/Profit_loss/ProfitDashboard';
 import Loader from '../Loader';
+import UpdateExpense from '../Pages/Expnese/UpdateExpense';
 
 const Routing = () => {
   return (
@@ -67,6 +68,7 @@ const Routing = () => {
         <Route path="/disel_paid_by" element={<DieselPaidBy />} />
         <Route path="/expense_paid_by" element={<ExpensePaidBy />} />
         <Route path="/add_expense" element={<AddExpense />} />
+        <Route path="/update-expense/:id" element={<UpdateExpense />} />
 
         {/* Profit Management Routes */}
         <Route path="/profit" element={<ProfitDashboard />} />

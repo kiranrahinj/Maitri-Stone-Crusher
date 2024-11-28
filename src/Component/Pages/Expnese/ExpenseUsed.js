@@ -1,7 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ExpensesUsed = () => {
+  const navigate=useNavigate()
+  const handleEdit=(id)=>{  
+    navigate(`/update-expense/${id}`) 
+  }
   
   const expensesData=useSelector((state)=>state.expense.expense);
 
@@ -24,6 +29,7 @@ const ExpensesUsed = () => {
               <th className="px-4 py-2 text-left font-semibold">Expense Paid By</th>
               <th className="px-4 py-2 text-left font-semibold">Remark</th>
               <th className="px-4 py-2 text-left font-semibold">Expense Created By</th>
+              <th  className="px-4 py-2 text-left font-semibold">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
@@ -42,6 +48,7 @@ const ExpensesUsed = () => {
                 <td className="px-4 py-2">{expense.expensePaidBy}</td>
                 <td className="px-4 py-2">{expense.remark}</td>
                 <td className="px-4 py-2">{expense.expenseCreatedBy}</td>
+                <td className="px-4 py-2"><button className="bg-green-600 w-20 p-1 rounded-xl text-center text-white" onClick={()=>handleEdit(expense.id)}>Edit</button></td>
               </tr>
             ))}
           </tbody>

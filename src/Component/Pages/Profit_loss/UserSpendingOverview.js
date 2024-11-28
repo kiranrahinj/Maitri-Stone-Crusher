@@ -11,18 +11,28 @@ export const UserSpendingOverview = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { startOfMonth, endOfMonth } = useSelector((state) => state.dates);
+  const { startOfMonth, endOfMonth } = useSelector((state) => state);
+  // console.log(startOfMonth,endOfMonth);
+  
+
+  // const formatDate = (date) => {
+  //   const year = date.getFullYear();
+  //   const month = String(date.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
+  //   const day = String(date.getDate()).padStart(2, '0'); // Add leading zero if needed
+  //   return `${year}-${month}-${day}`;
+  // };
 
   useEffect(() => {
     const fetchSpendings = async () => {
       setLoading(true);
+      
       try {
         const fetchPromises = users.map((userName) =>
           api.get('/user/profit/spendings', {
             params: {
               name: userName,
-              startOfMonth: new Date(startOfMonth).toISOString().split('T')[0], // Convert string to Date object
-              endOfMonth: new Date(endOfMonth).toISOString().split('T')[0],
+              startOfMonth:startOfMonth, 
+              endOfMonth:endOfMonth,
             },
           })
         );

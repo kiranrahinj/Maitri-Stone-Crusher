@@ -37,8 +37,8 @@ export const MonthlyProfitOverview = ({ onMonthSelect }) => {
         profits.push({
           month: startOfMonth.toLocaleString('default', { month: 'long', year: 'numeric' }),
           amount: response.data,
-          startDate: startOfMonth,
-          endDate: endOfMonth,
+          startDate: startOfMonthFormatted,
+          endDate: endOfMonthFormatted,
         });
       } catch (error) {
         console.error('Error fetching monthly profits:', error);
@@ -56,7 +56,7 @@ export const MonthlyProfitOverview = ({ onMonthSelect }) => {
 
   const handleMonthClick = (startOfMonth, endOfMonth) => {
     console.log(startOfMonth,endOfMonth);
-    dispatch(setDate(startOfMonth, endOfMonth));
+    dispatch(setDate(startOfMonth,endOfMonth));
   };
 
   const renderedProfits = useMemo(() => {
