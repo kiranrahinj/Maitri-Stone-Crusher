@@ -1,11 +1,19 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import api from "../../Axios/Api";
 import Loader from "../../Loader"
+import { useDispatch } from 'react-redux';
+import { setDate } from '../../Redux/Slices/DateSlice';
 
 const YearlyProfitOverview = () => {
   const [yearlyProfits, setYearlyProfits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const dispatch=useDispatch();
+  
+  const handleMonthClick = (startOfMonth, endOfMonth) => {
+    console.log(startOfMonth,endOfMonth);
+    dispatch(setDate({startOfMonth,endOfMonth}));
+  };
 
   // Function to fetch yearly profits for the last 12 completed months
   const fetchMonthlyProfits = async () => {
@@ -25,6 +33,8 @@ const YearlyProfitOverview = () => {
           },
         });
         profits.push({
+          startOfMonth: startOfMonth.toISOString().split('T')[0],
+          endOfMonth: endOfMonth.toISOString().split('T')[0],
           month: startOfMonth.toLocaleString('default', { year: 'numeric' }),
           amount: response.data,
         });
@@ -59,6 +69,8 @@ const YearlyProfitOverview = () => {
           position: 'relative',
           overflow: 'hidden',
         }}
+        onClick={() => handleMonthClick(profit.startOfMonth, profit.endOfMonth)}
+
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-5px)';
           e.currentTarget.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.25)';

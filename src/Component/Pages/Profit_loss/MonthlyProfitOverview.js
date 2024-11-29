@@ -3,6 +3,8 @@ import api from "../../Axios/Api";
 import Loader from "../../Loader";
 import { useDispatch } from 'react-redux';
 import { setDate } from '../../Redux/Slices/DateSlice';
+
+
 export const MonthlyProfitOverview = ({ onMonthSelect }) => {
   const [monthlyProfits, setMonthlyProfits] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,7 +58,7 @@ export const MonthlyProfitOverview = ({ onMonthSelect }) => {
 
   const handleMonthClick = (startOfMonth, endOfMonth) => {
     console.log(startOfMonth,endOfMonth);
-    dispatch(setDate(startOfMonth,endOfMonth));
+    dispatch(setDate({startOfMonth,endOfMonth}));
   };
 
   const renderedProfits = useMemo(() => {

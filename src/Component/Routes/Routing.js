@@ -29,6 +29,7 @@ import UpdateCustomer from '../Pages/Customer/UpdateCustomer';
 import {ProfitDashboard} from '../Pages/Profit_loss/ProfitDashboard';
 import Loader from '../Loader';
 import UpdateExpense from '../Pages/Expnese/UpdateExpense';
+import UserSpendingOverview from '../Pages/Profit_loss/UserSpendingOverview';
 
 const Routing = () => {
   return (
@@ -72,6 +73,7 @@ const Routing = () => {
 
         {/* Profit Management Routes */}
         <Route path="/profit" element={<ProfitDashboard />} />
+        <Route path="/spending/:id" element={<UserSpendingOverview />} />
         
       </Route>
       {/* 404 Not Found Route */}

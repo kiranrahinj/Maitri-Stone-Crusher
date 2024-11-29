@@ -1,20 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Function to get the first and last date of the current month
-const getStartOfMonth = () => {
-  const today = new Date();
-  return new Date(today.getFullYear(), today.getMonth(), 1); // First day of current month
-};
-
-const getEndOfMonth = () => {
-  const today = new Date();
-  return new Date(today.getFullYear(), today.getMonth() + 1, 0); // Last day of current month
-};
-
 // Initialize state with dynamic values
 const initialState = {
-  startOfMonth: getStartOfMonth().toISOString().split("T")[0], // Format as YYYY-MM-DD
-  endOfMonth: getEndOfMonth().toISOString().split("T")[0],     // Format as YYYY-MM-DD
+  startOfMonth: "2024-11-01", // Example hardcoded date
+  endOfMonth: "2024-11-30",  // Example hardcoded date
 };
 
 const DateSlice = createSlice({
