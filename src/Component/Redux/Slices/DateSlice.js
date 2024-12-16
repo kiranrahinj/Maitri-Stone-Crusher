@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // Initialize state with dynamic values
 const initialState = {
-  startOfMonth: "2024-11-01", // Example hardcoded date
-  endOfMonth: "2024-11-30",  // Example hardcoded date
+  startOfMonth: "2024-01-01", // Example hardcoded date
+  endOfMonth: "2040-12-31",  // Example hardcoded date
 };
 
 const DateSlice = createSlice({
